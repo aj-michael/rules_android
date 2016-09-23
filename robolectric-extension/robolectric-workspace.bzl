@@ -7,6 +7,12 @@ load(":robolectric-deps.bzl", "lib_deps_by_version", "shadows_deps_by_version", 
 def robolectric_jars(
     robolectric_versions=lib_deps_by_version.keys(),
     android_os_versions=android_os_deps_by_version.keys()):
+  # Initialize the version of junit needed.
+  native.maven_jar(
+      name = "junit_junit_4_12",
+      artifact = "junit:junit:4.12",
+  )
+  
   for robolectric_version in robolectric_versions:
     for artifact in lib_deps_by_version.get(robolectric_version):
       # print("Making maven_jar(name=%s, artifact=%s)" % (safe_name(artifact), artifact))
