@@ -6,6 +6,10 @@ lib_deps_by_version = {
         "org.robolectric:robolectric-annotations:3.1.1",
         "org.robolectric:robolectric-resources:3.1.1",
         "org.robolectric:robolectric-utils:3.1.1",
+        "org.ow2.asm:asm:5.0.1",
+        "org.ow2.asm:asm-util:5.0.1",
+        "org.ow2.asm:asm-commons:5.0.1",
+        "org.ow2.asm:asm-analysis:5.0.1",
     ],
     "3.1": [
         "org.robolectric:robolectric:3.1",
@@ -33,6 +37,8 @@ shadows_deps_by_version = {
         "org.robolectric:shadows-core-v18:3.1.1",
         "org.robolectric:shadows-core-v17:3.1.1",
         "org.robolectric:shadows-core-v16:3.1.1",
+        "org.apache.ant:ant:1.8.0",
+        "org.apache.maven:maven-ant-tasks:2.1.3",
     ],
     "3.1": [
         "org.robolectric:shadows-core:3.1",

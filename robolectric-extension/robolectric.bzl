@@ -102,7 +102,7 @@ def robolectric_test(name, robolectric_version = "3.1.1", android_os_version = "
   # Now fill in additional arguments before passing through to android_robolectric_test.
   if "deps" not in kwargs:
     kwargs["deps"] = []
-  kwargs["deps"] += lib_deps + shadows_deps + ["@junit_junit_4_12//jar"]
+  kwargs["deps"] += lib_deps + shadows_deps + android_os_deps
 
   if "classpath_resources" not in kwargs:
     kwargs["classpath_resources"] = []
