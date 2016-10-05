@@ -82,7 +82,7 @@ def _get_android_os_deps(android_os_version, cfg=None):
       android_os_deps_by_version[android_os_version])
 
 # A useful macro for expanding all the configurations and dependencies needed for an android_robolectric_test().
-def robolectric_test(name, robolectric_version = "3.1.1", android_os_version = "6.0.0", **kwargs):
+def robolectric_test(name, robolectric_version = "3.1.2", android_os_version = "6.0.0", **kwargs):
   lib_deps = _get_lib_deps(robolectric_version)
   shadows_deps = _get_shadows_deps(robolectric_version)
   android_os_deps = _get_android_os_deps(android_os_version)
@@ -92,7 +92,7 @@ def robolectric_test(name, robolectric_version = "3.1.1", android_os_version = "
   print("shadows_deps = ", shadows_deps)
 
   robolectric_deps_properties(
-    name = name + "robolectric_deps_properties",
+    name = name + "_robolectric_deps_properties",
     android_os_version = android_os_version,
     robolectric_version = robolectric_version,
     android_os_deps = android_os_deps,

@@ -1,15 +1,32 @@
 print("loading module robolectric-deps.bzl")
 
 lib_deps_by_version = {
+    "3.1.2": [
+        "com.almworks.sqlite4java:sqlite4java:0.282",
+        "com.google.android.apps.common.testing.accessibility.framework:accessibility-test-framework:2.1",
+        "com.google.guava:guava:19.0",
+        "com.ibm.icu:icu4j:53.1",
+        "com.thoughtworks.xstream:xstream:1.4.8",
+        "com.ximpleware:vtd-xml:2.11",
+        "org.apache.ant:ant:1.8.0",
+        "org.apache.httpcomponents:httpclient:4.0.3",
+        "org.apache.maven:maven-ant-tasks:2.1.3",
+        "org.bouncycastle:bcprov-jdk16:1.46",
+        "org.ow2.asm:asm-analysis:5.0.1",
+        "org.ow2.asm:asm-commons:5.0.1",
+        "org.ow2.asm:asm-tree:5.0.1",
+        "org.ow2.asm:asm-util:5.0.1",
+        "org.ow2.asm:asm:5.0.1",
+        "org.robolectric:robolectric-annotations:3.1.2",
+        "org.robolectric:robolectric-resources:3.1.2",
+        "org.robolectric:robolectric-utils:3.1.2",
+        "org.robolectric:robolectric:3.1.2",
+    ],
     "3.1.1": [
         "org.robolectric:robolectric:3.1.1",
         "org.robolectric:robolectric-annotations:3.1.1",
         "org.robolectric:robolectric-resources:3.1.1",
         "org.robolectric:robolectric-utils:3.1.1",
-        "org.ow2.asm:asm:5.0.1",
-        "org.ow2.asm:asm-util:5.0.1",
-        "org.ow2.asm:asm-commons:5.0.1",
-        "org.ow2.asm:asm-analysis:5.0.1",
     ],
     "3.1": [
         "org.robolectric:robolectric:3.1",
@@ -26,6 +43,18 @@ lib_deps_by_version = {
 }
 
 shadows_deps_by_version = {
+    "3.1.2": [
+        "org.robolectric:shadows-httpclient:3.1.2",
+        "org.robolectric:shadows-multidex:3.1.2",
+        "org.robolectric:shadows-play-services:3.1.2",
+        "org.robolectric:shadows-core-v23:3.1.2",
+        "org.robolectric:shadows-core-v22:3.1.2",
+        "org.robolectric:shadows-core-v21:3.1.2",
+        "org.robolectric:shadows-core-v19:3.1.2",
+        "org.robolectric:shadows-core-v18:3.1.2",
+        "org.robolectric:shadows-core-v17:3.1.2",
+        "org.robolectric:shadows-core-v16:3.1.2",
+    ],
     "3.1.1": [
         "org.robolectric:shadows-httpclient:3.1.1",
         "org.robolectric:shadows-multidex:3.1.1",
@@ -37,8 +66,6 @@ shadows_deps_by_version = {
         "org.robolectric:shadows-core-v18:3.1.1",
         "org.robolectric:shadows-core-v17:3.1.1",
         "org.robolectric:shadows-core-v16:3.1.1",
-        "org.apache.ant:ant:1.8.0",
-        "org.apache.maven:maven-ant-tasks:2.1.3",
     ],
     "3.1": [
         "org.robolectric:shadows-core:3.1",
