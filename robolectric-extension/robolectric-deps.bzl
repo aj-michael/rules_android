@@ -21,6 +21,7 @@ lib_deps_by_version = {
         "org.robolectric:robolectric-resources:3.1.2",
         "org.robolectric:robolectric-utils:3.1.2",
         "org.robolectric:robolectric:3.1.2",
+        "org.robolectric:shadows-core-v23:3.1.2",
     ],
     "3.1.1": [
         "org.robolectric:robolectric:3.1.1",
@@ -47,7 +48,7 @@ shadows_deps_by_version = {
         "org.robolectric:shadows-httpclient:3.1.2",
         "org.robolectric:shadows-multidex:3.1.2",
         "org.robolectric:shadows-play-services:3.1.2",
-        "org.robolectric:shadows-core-v23:3.1.2",
+        #"org.robolectric:shadows-core-v23:3.1.2",
         "org.robolectric:shadows-core-v22:3.1.2",
         "org.robolectric:shadows-core-v21:3.1.2",
         "org.robolectric:shadows-core-v19:3.1.2",
