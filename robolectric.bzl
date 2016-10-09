@@ -1,17 +1,18 @@
-#
-# Robolectric tests should load this rule into their BUILD files.
-# load(":robolectric.bzl", "robolectric_deps_properties")
-
 load(":robolectric-util.bzl", "safe_name", "map")
-load(":robolectric-deps.bzl", "lib_deps_by_version", "shadows_deps_by_version", "android_os_deps_by_version")
+load(":robolectric-artifacts.bzl",
+     "lib_artifacts_by_version",
+     "shadows_artifacts_by_version",
+     "android_os_artifacts_by_version")
 
+# Convert a Maven Artifact name "groupId:artifactId:versionId" into the
+# name of the maven_jar remote repository.
 def _convert_artifact_to_dep(artifact):
   return Label("@%s//jar" % (safe_name(artifact)))
 
 # Implementation for the 'robolectrics_deps_properties' rule.
 def _robolectric_deps_properties_impl(ctx):
-  android_os_artifacts = android_os_deps_by_version.get(ctx.attr.android_os_version)
-  shadows_artifacts = shadows_deps_by_version.get(ctx.attr.robolectric_version)
+  android_os_artifacts = android_os_artifacts_by_version.get(ctx.attr.android_os_version)
+  shadows_artifacts = shadows_artifacts_by_version.get(ctx.attr.robolectric_version)
   # The output file consists of lines of the form:
   #   <maven coordinate>:<jar file>
   lines = []
@@ -61,35 +62,29 @@ robolectric_deps_properties = rule(
 ####
 
 def _get_lib_deps(robolectric_version, cfg=None):
-  print("Looking up robolectric_version='%s'" % (robolectric_version))
-  if robolectric_version not in lib_deps_by_version:
+  if robolectric_version not in lib_artifacts_by_version:
     fail("Unrecognized Robolectric version: %s" % robolectric_version)
   return map(_convert_artifact_to_dep,
-      lib_deps_by_version[robolectric_version])
+      lib_artifacts_by_version[robolectric_version])
 
 def _get_shadows_deps(robolectric_version, cfg=None):
-  print("Looking up robolectric_version='%s'" % (robolectric_version))
-  if robolectric_version not in shadows_deps_by_version:
+  if robolectric_version not in shadows_artifacts_by_version:
     fail("Unrecognized Robolectric version: %s" % robolectric_version)
   return map(_convert_artifact_to_dep,
-      shadows_deps_by_version[robolectric_version])
+      shadows_artifacts_by_version[robolectric_version])
 
 def _get_android_os_deps(android_os_version, cfg=None):
-  print("Looking up android_os_version='%s'" % (android_os_version))
-  if android_os_version not in android_os_deps_by_version:
+  if android_os_version not in android_os_artifacts_by_version:
     fail("Unrecognized Robolectric version: %s" % android_os_version)
   return map(_convert_artifact_to_dep,
-      android_os_deps_by_version[android_os_version])
+      android_os_artifacts_by_version[android_os_version])
 
-# A useful macro for expanding all the configurations and dependencies needed for an android_robolectric_test().
+# A useful macro for expanding all the configurations and dependencies needed for an
+# android_robolectric_test().
 def robolectric_test(name, robolectric_version = "3.1.2", android_os_version = "6.0.0", **kwargs):
   lib_deps = _get_lib_deps(robolectric_version)
   shadows_deps = _get_shadows_deps(robolectric_version)
   android_os_deps = _get_android_os_deps(android_os_version)
-
-  print("lib_deps = ", lib_deps)
-  print("android_os_deps = ", android_os_deps)
-  print("shadows_deps = ", shadows_deps)
 
   robolectric_deps_properties(
     name = name + "_robolectric_deps_properties",

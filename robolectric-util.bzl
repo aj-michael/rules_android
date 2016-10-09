@@ -1,3 +1,4 @@
+# Convert invalid Bazel name characters to underscores.
 def safe_name(name_):
   return name_.replace(':', '_').replace('-', '_').replace('.', '_')
 

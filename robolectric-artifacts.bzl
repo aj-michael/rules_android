@@ -1,6 +1,4 @@
-print("loading module robolectric-deps.bzl")
-
-lib_deps_by_version = {
+lib_artifacts_by_version = {
     "3.1.2": [
         "com.almworks.sqlite4java:sqlite4java:0.282",
         "com.google.android.apps.common.testing.accessibility.framework:accessibility-test-framework:2.1",
@@ -43,7 +41,7 @@ lib_deps_by_version = {
     ],
 }
 
-shadows_deps_by_version = {
+shadows_artifacts_by_version = {
     "3.1.2": [
         "org.robolectric:shadows-httpclient:3.1.2",
         "org.robolectric:shadows-multidex:3.1.2",
@@ -84,7 +82,7 @@ shadows_deps_by_version = {
 
 # Versions of the android-all artifact in Maven Central.
 #   See https://mvnrepository.com/artifact/org.robolectric/android-all
-android_os_deps_by_version = {
+android_os_artifacts_by_version = {
     "6.0.0": ["org.robolectric:android-all:6.0.0_r1-robolectric-0"],
     "5.1.1": ["org.robolectric:android-all:5.1.1_r9-robolectric-1"],
     "5.0.0": ["org.robolectric:android-all:5.0.0_r2-robolectric-1"],
