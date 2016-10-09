@@ -11,7 +11,9 @@ def _convert_artifact_to_dep(artifact):
 
 # Implementation for the 'robolectrics_deps_properties' rule.
 def _robolectric_deps_properties_impl(ctx):
-  android_os_artifacts = android_os_artifacts_by_version.get(ctx.attr.android_os_version)
+  android_os_artifacts = []
+  for android_os_version in ctx.attr.android_os_versions:
+    android_os_artifacts += android_os_artifacts_by_version.get(android_os_version)
   shadows_artifacts = shadows_artifacts_by_version.get(ctx.attr.robolectric_version)
   # The output file consists of lines of the form:
   #   <maven coordinate>:<jar file>
@@ -43,7 +45,7 @@ def _robolectric_deps_properties_impl(ctx):
 # Wiring this file to the eventual test might be accomplished via java_binary(classpath_resources)
 robolectric_deps_properties = rule(
     attrs = {
-        "android_os_version": attr.string(mandatory = True),
+        "android_os_versions": attr.string_list(mandatory = True),
         "robolectric_version": attr.string(mandatory = True),
         "android_os_deps": attr.label_list(mandatory = True),
         "shadows_deps": attr.label_list(mandatory = True),
@@ -75,20 +77,23 @@ def _get_shadows_deps(robolectric_version, cfg=None):
 
 def _get_android_os_deps(android_os_version, cfg=None):
   if android_os_version not in android_os_artifacts_by_version:
-    fail("Unrecognized Robolectric version: %s" % android_os_version)
+    fail("Unrecognized Android version: %s" % android_os_version)
   return map(_convert_artifact_to_dep,
       android_os_artifacts_by_version[android_os_version])
 
 # A useful macro for expanding all the configurations and dependencies needed for an
 # android_robolectric_test().
-def robolectric_test(name, robolectric_version = "3.1.2", android_os_version = "6.0.0", **kwargs):
+def robolectric_test(
+    name, robolectric_version = "3.1.2", android_os_versions = ["6.0.0"], **kwargs):
   lib_deps = _get_lib_deps(robolectric_version)
   shadows_deps = _get_shadows_deps(robolectric_version)
-  android_os_deps = _get_android_os_deps(android_os_version)
+  android_os_deps = []
+  for android_os_version in android_os_versions:
+    android_os_deps += _get_android_os_deps(android_os_version)
 
   robolectric_deps_properties(
     name = name + "_robolectric_deps_properties",
-    android_os_version = android_os_version,
+    android_os_versions = android_os_versions,
     robolectric_version = robolectric_version,
     android_os_deps = android_os_deps,
     shadows_deps = shadows_deps
@@ -108,10 +113,3 @@ def robolectric_test(name, robolectric_version = "3.1.2", android_os_version = "
   kwargs["runtime_deps"] += android_os_deps + shadows_deps  # Perhaps use 'data' instead?
   
   native.android_robolectric_test(name=name, **kwargs)
-
-# TODO:
-# 1. Create a rule that wraps everything needed to call android_robolectric_test.
-# 2. Define a robolectric_config
-# 3. Provide robolectric_config as attr to robolectric_deps_properties, which uses providers.
-# 4. Provide robolectric_config to a wrapper around android_robolectric_test(), which accesses
-#    the providers in order to set attributes like deps, classpath_resources, etc.
