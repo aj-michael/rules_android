@@ -111,5 +111,14 @@ def robolectric_test(
   if "runtime_deps" not in kwargs:
     kwargs["runtime_deps"] = []
   kwargs["runtime_deps"] += android_os_deps + shadows_deps  # Perhaps use 'data' instead?
+
+  # Try to carry along AndroidManifest.xml or any other test xml files.
+  if "data" not in kwargs:
+    kwargs["data"] = []
+  kwargs["data"] += native.glob(["**/*.xml"], exclude=[
+      ".*",  # Exclude hidden files.
+      ".*/**/*", "*/**/.*/*",  # Exclude hidden directories.
+      "bazel*/**/*", "build*/**/*"  # Exclude any Bazel files or Gradle files.
+  ])
   
   native.android_robolectric_test(name=name, **kwargs)
